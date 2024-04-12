@@ -1,0 +1,2 @@
+﻿string request = Console.ReadLine();
+
