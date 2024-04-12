@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gciskander_Test", "gciskander_Test\gciskander_Test.csproj", "{3FF99CB7-DFE8-48A9-AFF1-4CE2C2AD6A50}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auto-extension", "Auto-extension\Auto-extension.csproj", "{205232E3-DC5F-4BC7-9DF3-79514FBF9765}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3FF99CB7-DFE8-48A9-AFF1-4CE2C2AD6A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FF99CB7-DFE8-48A9-AFF1-4CE2C2AD6A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FF99CB7-DFE8-48A9-AFF1-4CE2C2AD6A50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{205232E3-DC5F-4BC7-9DF3-79514FBF9765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{205232E3-DC5F-4BC7-9DF3-79514FBF9765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{205232E3-DC5F-4BC7-9DF3-79514FBF9765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{205232E3-DC5F-4BC7-9DF3-79514FBF9765}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
