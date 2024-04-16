@@ -15,9 +15,9 @@ List<WordContinue> wordContinues = continuer.ContinueRange(wordPieces);
 
 foreach (WordContinue item in wordContinues)
 {
-	Console.WriteLine(item.Value);
-	foreach (string word in item.Continues)
+	Console.WriteLine("\n" + item.Value);
+	foreach (WordRating word in item.Continues)
 	{
-		Console.WriteLine("".PadLeft(4) + word);
+		Console.WriteLine("".PadLeft(4) + word.Value);
 	}
 }

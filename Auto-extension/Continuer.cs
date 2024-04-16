@@ -6,35 +6,102 @@ namespace Auto_extension;
 public class Continuer : IContinuer
 {
 	private readonly List<WordRating> _wordsDB;
+	private const int CONTINUE_COUNT = 10;
 
 	public Continuer(List<WordRating> words)
 	{
-		//Сортируя базу здесь и обращаясь в будущем мы всегда получим значения в порядке частоты
-		_wordsDB = words.OrderByDescending(p => p.Recent).ThenBy(p => p.Value).ToList();
+		_wordsDB = Sort(words);
 	}
 
-	public WordContinue Continue(string word)
+	private static List<WordRating> Sort(List<WordRating> words)
 	{
-		List<string> matchingWords = GetMatchingWords(word);
-
-		WordContinue wc = new (word, matchingWords.ToList());
-
-		return wc;
-	}
-
-	private List<string> GetMatchingWords(string word)
-	{
-		List<string> wordsStartingWithInput = _wordsDB
-			.Select(e => e.Value)
-			.Where(w => w.StartsWith(word))
-			.OrderBy(w => w)
+		return words
+			.OrderBy(p => p.Value)
+			.ThenBy(p => p.Recent)
 			.ToList();
-
-		return wordsStartingWithInput;
 	}
 
-	public List<WordContinue> ContinueRange(List<string> word)
+	public List<WordContinue> ContinueRange(List<string> word) => word.AsParallel().Select(Continue).ToList();
+
+	public WordContinue Continue(string word) => new(word, GetMatchingWords(word));
+
+	private List<WordRating> GetMatchingWords(string word)
 	{
-		return word.Select(Continue).ToList();
+		List<WordRating> words = FindWordsWithPrefix(word);
+
+		return words
+			.OrderByDescending(a => a.Recent)
+			.ThenBy(a => a.Value)
+			.Take(CONTINUE_COUNT)
+			.ToList();
+	}
+
+	private List<WordRating> FindWordsWithPrefix(string prefix)
+	{
+		int start = FindStartIndex(_wordsDB, prefix);
+		int end = FindEndIndex(_wordsDB, prefix);
+
+		if (start == -1 || end == -1)
+		{
+			return [];
+		}
+
+		return _wordsDB.GetRange(start, end - start + 1);
+	}
+
+	private static int FindStartIndex(List<WordRating> words, string prefix)
+	{
+		int left = 0;
+		int right = words.Count - 1;
+		int result = -1;
+
+		while (left <= right)
+		{
+			int mid = left + (right - left) / 2;
+
+			if (words[mid].Value.StartsWith(prefix))
+			{
+				right = mid - 1;
+				result = mid;
+			}
+			else if (string.Compare(words[mid].Value, prefix) < 0)
+			{
+				left = mid + 1;
+			}
+			else
+			{
+				right = mid - 1;
+			}
+		}
+
+		return result;
+	}
+
+	private static int FindEndIndex(List<WordRating> words, string prefix)
+	{
+		int left = 0;
+		int right = words.Count - 1;
+		int result = -1;
+
+		while (left <= right)
+		{
+			int mid = left + (right - left) / 2;
+
+			if (words[mid].Value.StartsWith(prefix))
+			{
+				left = mid + 1;
+				result = mid;
+			}
+			else if (string.Compare(words[mid].Value, prefix) <= 0)
+			{
+				left = mid + 1;
+			}
+			else
+			{
+				right = mid - 1;
+			}
+		}
+
+		return result;
 	}
 }
