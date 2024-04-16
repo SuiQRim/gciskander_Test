@@ -2,22 +2,16 @@
 using Auto_extension.Models;
 using gciskander_Test;
 
+WordDataManager wdManager = new ();
+await wdManager.ReadFile(@"TestFilePath");
+
 const int startLine = 0;
-
-WordReader wordReader = new ();
-
-List<WordRating> wordRatings = wordReader.GetWordRatings(startLine);
-List<string> wordPieces = wordReader.GetWordPieces(startLine + wordRatings.Count + 1);
+List<WordRating> wordRatings = wdManager.GetWordRatings(startLine);
+List<string> wordPieces = wdManager.GetWordPieces(startLine + wordRatings.Count + 1);
 
 Continuer continuer = new(wordRatings);
 List<WordContinue> wordContinues = continuer.ContinueRange(wordPieces);
 
-
-foreach (WordContinue item in wordContinues)
-{
-	Console.WriteLine("\n" + item.Value);
-	foreach (WordRating word in item.Continues)
-	{
-		Console.WriteLine("".PadLeft(4) + word.Value);
-	}
-}
+// Если надо можно вывести в консоль (но туда не лезет большой объем данных)
+//wdManager.WriteToConsole(wordContinues);
+await wdManager.WriteToFile(@"ResultPath", wordContinues);
