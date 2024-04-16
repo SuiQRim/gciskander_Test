@@ -53,11 +53,6 @@ internal class WordDataManager
 		return words;
 	}
 
-	public void WriteToConsole(List<WordContinue> wordContinues)
-	{
-		Console.WriteLine(WordsToResult(wordContinues));
-	}
-
 	public async Task WriteToFile(string path, List<WordContinue> wordContinues)
 	{
 		using FileStream fileStream = new(path, FileMode.Create);

@@ -12,6 +12,4 @@ List<string> wordPieces = wdManager.GetWordPieces(startLine + wordRatings.Count 
 Continuer continuer = new(wordRatings);
 List<WordContinue> wordContinues = continuer.ContinueRange(wordPieces);
 
-// Если надо можно вывести в консоль (но туда не лезет большой объем данных)
-//wdManager.WriteToConsole(wordContinues);
 await wdManager.WriteToFile(@"ResultPath", wordContinues);
